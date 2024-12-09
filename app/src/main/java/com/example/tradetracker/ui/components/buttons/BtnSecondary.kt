@@ -1,4 +1,4 @@
-package com.example.tradetracker.components
+package com.example.tradetracker.ui.components.buttons
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.height

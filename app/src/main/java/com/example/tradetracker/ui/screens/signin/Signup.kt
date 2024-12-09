@@ -1,4 +1,4 @@
-package com.example.tradetracker.login
+package com.example.tradetracker.ui.screens.signin
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -9,13 +9,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.tradetracker.components.BtnPrimary
-import com.example.tradetracker.components.InputField
+import androidx.navigation.NavController
+import com.example.tradetracker.ui.components.buttons.BtnPrimary
+import com.example.tradetracker.ui.components.InputField
 import com.example.tradetracker.ui.theme.bg
 import com.example.tradetracker.ui.theme.yc
 
 @Composable
-fun SignupScreen() {
+fun SignupScreen(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -33,13 +34,14 @@ fun SignupScreen() {
                 fontSize = 48.sp,
                 fontWeight = FontWeight(400),
                 color = yc,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = 16.dp),
+                lineHeight = 56.sp
             )
             InputField(labelText = "USERNAME")
             Spacer(modifier = Modifier.height(8.dp))
             InputField(labelText = "PASSWORD")
             Spacer(modifier = Modifier.height(16.dp))
-            BtnPrimary(text = "CREATE ACCOUNT") { }
+            BtnPrimary(text = "CREATE ACCOUNT", destination = "home", navController = navController)
         }
     }
 }
