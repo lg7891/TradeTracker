@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -26,8 +27,8 @@ import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.tradetracker.ui.theme.yc
-
 
 @Composable
 fun NavigationBar(navController: NavController) {
@@ -64,7 +65,12 @@ fun NavigationBar(navController: NavController) {
             route = "settings"
         )
     )
-    var selectedItem by remember { mutableIntStateOf(0) }
+
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+
+    val selectedItem = remember(currentRoute) {
+        items.indexOfFirst { it.route == currentRoute }
+    }
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -87,8 +93,15 @@ fun NavigationBar(navController: NavController) {
                     },
                     selected = selectedItem == index,
                     onClick = {
-                        selectedItem = index
-                        navController.navigate(item.route)
+                        if (selectedItem != index) {
+                            navController.navigate(item.route) {
+                                popUpTo(navController.graph.startDestinationId) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
                     },
                     colors = NavigationBarItemDefaults.colors(
                         indicatorColor = yc
@@ -97,5 +110,4 @@ fun NavigationBar(navController: NavController) {
             }
         }
     }
-
 }
