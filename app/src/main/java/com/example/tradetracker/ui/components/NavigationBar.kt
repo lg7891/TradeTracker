@@ -1,4 +1,4 @@
-package com.example.tradetracker.components
+package com.example.tradetracker.ui.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -25,15 +26,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color.Companion.Black
 import androidx.compose.ui.graphics.Color.Companion.White
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.navigation.NavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.tradetracker.ui.theme.yc
 
-
 @Composable
-fun NavigationBar() {
+fun NavigationBar(navController: NavController) {
     data class BottomNavigationItem(
         val title: String,
         val selectedIcon: ImageVector,
-        val unselectedIcon: ImageVector
+        val unselectedIcon: ImageVector,
+        val route: String
     )
 
     val items = listOf(
@@ -41,24 +44,33 @@ fun NavigationBar() {
             title = "Home",
             selectedIcon = Icons.Filled.Home,
             unselectedIcon = Icons.Outlined.Home,
+            route = "home"
         ),
         BottomNavigationItem(
-            title = "Chat",
+            title = "Help",
             selectedIcon = Icons.Filled.Info,
             unselectedIcon = Icons.Outlined.Info,
+            route = "help"
         ),
         BottomNavigationItem(
-            title = "Settings",
+            title = "Add",
             selectedIcon = Icons.Filled.Add,
             unselectedIcon = Icons.Outlined.Add,
+            route = "add"
         ),
         BottomNavigationItem(
             title = "Settings",
             selectedIcon = Icons.Filled.Settings,
             unselectedIcon = Icons.Outlined.Settings,
+            route = "settings"
         )
     )
-    var selectedItem by remember { mutableIntStateOf(0) }
+
+    val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+
+    val selectedItem = remember(currentRoute) {
+        items.indexOfFirst { it.route == currentRoute }
+    }
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -80,7 +92,17 @@ fun NavigationBar() {
                         Text(text = item.title, color = White)
                     },
                     selected = selectedItem == index,
-                    onClick = { selectedItem = index },
+                    onClick = {
+                        if (selectedItem != index) {
+                            navController.navigate(item.route) {
+                                popUpTo(navController.graph.startDestinationId) {
+                                    saveState = true
+                                }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        }
+                    },
                     colors = NavigationBarItemDefaults.colors(
                         indicatorColor = yc
                     )
@@ -88,5 +110,4 @@ fun NavigationBar() {
             }
         }
     }
-
 }

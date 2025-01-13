@@ -1,4 +1,4 @@
-package com.example.tradetracker.components
+package com.example.tradetracker.ui.components.buttons
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.height
@@ -14,7 +14,7 @@ import com.example.tradetracker.ui.theme.bg
 import com.example.tradetracker.ui.theme.yc
 
 @Composable
-fun BtnPrimary(
+fun BtnSecondary(
     text: String,
     onClick: () -> Unit
 ) {
@@ -22,15 +22,16 @@ fun BtnPrimary(
         onClick = onClick,
         modifier = Modifier
             .width(300.dp)
-            .height(45.dp),
+            .height(45.dp)
+            .border(width = 1.dp, color = yc),
         colors = ButtonDefaults.buttonColors(
-            containerColor = yc
+            containerColor = bg
         )
     ) {
         Text(
             text = text,
             fontSize = 16.sp,
-            color = bg
+            color = yc
         )
     }
 }
