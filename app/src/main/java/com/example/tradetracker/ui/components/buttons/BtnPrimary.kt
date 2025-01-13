@@ -17,10 +17,15 @@ import com.example.tradetracker.ui.theme.yc
 fun BtnPrimary(
     text: String,
     destination: String,
-    navController: NavController
+    navController: NavController,
+    onClick: () -> Unit,
+    extraText: @Composable (() -> Unit)? = null
 ) {
     Button(
-        onClick = { navController.navigate(destination) },
+        onClick = {
+            navController.navigate(destination)
+            onClick()
+        },
         modifier = Modifier
             .width(300.dp)
             .height(45.dp),
@@ -33,5 +38,9 @@ fun BtnPrimary(
             fontSize = 16.sp,
             color = bg
         )
+    }
+
+    extraText?.let {
+        it()
     }
 }

@@ -11,7 +11,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 
 @Composable
-fun InputField(labelText: String, textColor: Color = Color.White) {
+fun InputField(
+    labelText: String,
+    textColor: Color = Color.White,
+    value: String,
+    onValueChange: (String) -> Unit
+) {
     var text by remember { mutableStateOf("") }
 
     OutlinedTextField(

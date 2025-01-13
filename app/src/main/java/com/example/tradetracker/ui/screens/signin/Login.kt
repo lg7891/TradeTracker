@@ -4,18 +4,23 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.tradetracker.models.AuthState
+import com.example.tradetracker.models.AuthViewModel
 import com.example.tradetracker.ui.components.buttons.BtnPrimary
 import com.example.tradetracker.ui.components.InputField
 import com.example.tradetracker.ui.screens.LoadingScreen
@@ -24,20 +29,30 @@ import com.example.tradetracker.ui.theme.yc
 import kotlinx.coroutines.delay
 
 @Composable
-fun LoginScreen(navController: NavController) {
+fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
 
-    var isLoading by remember { mutableStateOf(true)}
+//    var isLoading by remember { mutableStateOf(true) }
+    val authState = authViewModel.authState.observeAsState()
+    val context = LocalContext.current
 
-    LaunchedEffect(Unit) {
-        delay(2000)
-        isLoading = false
+    var email by remember {
+        mutableStateOf("")
     }
 
-    if (isLoading) {
-        LoadingScreen()
-    } else {
-        LoginScreen(navController)
+    var password by remember {
+        mutableStateOf("")
     }
+
+//    LaunchedEffect(Unit) {
+//        delay(2000)
+//        isLoading = false
+//    }
+//
+//    if (isLoading) {
+//        LoadingScreen()
+//    } else {
+//        LoginScreen(navController, authViewModel)
+//    }
 
     Box(
         modifier = Modifier
@@ -59,14 +74,48 @@ fun LoginScreen(navController: NavController) {
                 modifier = Modifier.padding(bottom = 32.dp),
                 lineHeight = 56.sp
             )
-            InputField(labelText = "USERNAME")
+
+            InputField(
+                labelText = "USERNAME",
+                value = email,
+                onValueChange = {
+                    email = it
+                })
+
             Spacer(modifier = Modifier.height(8.dp))
-            InputField(labelText = "PASSWORD")
+
+            InputField(
+                labelText = "PASSWORD",
+                value = password,
+                onValueChange = {
+                    password = it
+                })
+
             Spacer(modifier = Modifier.height(16.dp))
-            BtnPrimary(text = "LOGIN", destination = "home", navController = navController)
+
+            BtnPrimary(
+                text = "LOGIN",
+                destination = "home",
+                navController = navController,
+                onClick = {
+                    authViewModel.login(email, password)
+                }) {
+                Text(text = "No account is linked to entered DAta, SingUp!")
+            }
+
             Spacer(modifier = Modifier.height(8.dp))
-            HorizontalDivider(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp))
-            BtnPrimary(text = "SIGNUP", destination = "signup", navController = navController)
+
+            HorizontalDivider(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
+            )
+
+            TextButton(onClick = {
+                navController.navigate("signup")
+            }) {
+                Text(text = "Don't have an account, Signup")
+            }
         }
     }
 }
