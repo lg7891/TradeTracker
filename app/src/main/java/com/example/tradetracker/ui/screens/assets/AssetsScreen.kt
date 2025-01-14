@@ -73,8 +73,7 @@ fun AssetsScreen(navController: NavController, viewModel: CoinViewModel = viewMo
             LazyColumn(
                 modifier = Modifier
                     .background(bg),
-                contentPadding = PaddingValues(16.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 items(displayedCoins.size) { index ->
                     val coin = displayedCoins[index]
