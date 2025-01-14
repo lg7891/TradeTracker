@@ -61,4 +61,12 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //  API dependencies
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+    implementation (libs.gson)
+    implementation (libs.lifecycle.viewmodel.compose)
+    implementation (libs.androidx.lifecycle.runtime.ktx.v261)
+    implementation(libs.coil.compose)
 }
