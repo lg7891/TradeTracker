@@ -1,18 +1,14 @@
 package com.example.tradetracker.ui.screens.assets
 
-import CoinGeckoApi
+import AlertDialog
 import CoinViewModel
-import android.widget.Space
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -21,11 +17,6 @@ import androidx.navigation.NavController
 import com.example.tradetracker.ui.components.InputField
 import com.example.tradetracker.ui.components.buttons.BtnSecondary
 import com.example.tradetracker.ui.theme.bg
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 @Composable
 fun CoinDetailScreen(navController: NavController, coinId: String?, viewModel: CoinViewModel = viewModel()) {
@@ -34,6 +25,13 @@ fun CoinDetailScreen(navController: NavController, coinId: String?, viewModel: C
     var coinAmount by remember { mutableStateOf("") }
     var validEntry by remember { mutableStateOf(false) }
     val entryReg = Regex("^[0-9]+\\.?[0-9]*\$")
+    var showDialog by remember { mutableStateOf(false) }
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false }
+        )
+    }
 
     LaunchedEffect(coinId) {
         coinId?.let { viewModel.fetchCoinDetails(it) }
@@ -141,11 +139,9 @@ fun CoinDetailScreen(navController: NavController, coinId: String?, viewModel: C
                             println("Valid Entry on Click: $validEntry")
 
                             if (validEntry) {
-                                println("Navigating to assets")
                                 navController.navigate("assets")
                             } else {
-                                println("Navigating to home")
-                                navController.navigate("home")
+                                showDialog = true
                             }
                         },
                         text = "ADD",
