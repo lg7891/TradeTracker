@@ -17,11 +17,9 @@ fun InputField(
     value: String,
     onValueChange: (String) -> Unit
 ) {
-    var text by remember { mutableStateOf("") }
-
     OutlinedTextField(
-        value = text,
-        onValueChange = { text = it },
+        value = value,
+        onValueChange = onValueChange,
         label = { Text(labelText) },
         textStyle = TextStyle(color = textColor),
     )

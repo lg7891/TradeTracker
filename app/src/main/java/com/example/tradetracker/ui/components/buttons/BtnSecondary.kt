@@ -17,7 +17,6 @@ import com.example.tradetracker.ui.theme.yc
 @Composable
 fun BtnSecondary(
     text: String,
-    destination: String,
     navController: NavController,
     onClick: () -> Unit,
     extraText: @Composable (() -> Unit)? = null

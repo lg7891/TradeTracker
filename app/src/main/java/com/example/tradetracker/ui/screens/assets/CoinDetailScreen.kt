@@ -2,6 +2,7 @@ package com.example.tradetracker.ui.screens.assets
 
 import CoinGeckoApi
 import CoinViewModel
+import android.widget.Space
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -28,42 +29,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 @Composable
 fun CoinDetailScreen(navController: NavController, coinId: String?, viewModel: CoinViewModel = viewModel()) {
-    var coinName by remember { mutableStateOf("Loading...") }
-    var coinValue by remember { mutableStateOf("Loading...") }
+    val coinDetails by viewModel.coinDetails.collectAsState()
+    val errorMessage by viewModel.errorMessage.collectAsState()
     var coinAmount by remember { mutableStateOf("") }
-    var isValidAmount by remember { mutableStateOf(true) }
-
-    val numberRegex = Regex("^[0-9]+(\\\\,[0-9]{1,2})?\$")
+    var validEntry by remember { mutableStateOf(false) }
+    val entryReg = Regex("^[0-9]+\\.?[0-9]*\$")
 
     LaunchedEffect(coinId) {
-        if (coinId != null) {
-            CoroutineScope(Dispatchers.IO).launch {
-                try {
-                    val retrofit = Retrofit.Builder()
-                        .baseUrl("https://api.coingecko.com/api/v3/")
-                        .addConverterFactory(GsonConverterFactory.create())
-                        .build()
-
-                    val api = retrofit.create(CoinGeckoApi::class.java)
-                    val coins = api.getCoins(vsCurrency = "usd")
-
-                    val coin = coins.find { it.id == coinId }
-                    if (coin != null) {
-                        coinName = coin.name
-                        coinValue = "$${coin.current_price}"
-                    } else {
-                        coinName = "Coin not found"
-                        coinValue = "N/A"
-                    }
-                } catch (e: Exception) {
-                    coinName = "Error fetching data"
-                    coinValue = "N/A"
-                }
-            }
-        } else {
-            coinName = "Invalid Coin ID"
-            coinValue = "N/A"
-        }
+        coinId?.let { viewModel.fetchCoinDetails(it) }
     }
 
     Box(
@@ -104,32 +77,59 @@ fun CoinDetailScreen(navController: NavController, coinId: String?, viewModel: C
                     verticalArrangement = Arrangement.Center,
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(
-                        text = "Coin name: $coinName",
-                        color = Color.White,
-                        fontSize = 30.sp,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(top = 16.dp)
-                    )
+                    when {
+                        errorMessage != null -> {
+                            Text(
+                                text = errorMessage!!,
+                                color = Color.Red,
+                                fontSize = 20.sp,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.padding(16.dp)
+                            )
+                        }
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                        coinDetails != null -> {
+                            Text(
+                                text = "Coin name: ${coinDetails!!.name}",
+                                color = Color.White,
+                                fontSize = 30.sp,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.padding(top = 16.dp)
+                            )
 
-                    Text(
-                        text = "Current value: $coinValue",
-                        color = Color.White,
-                        fontSize = 20.sp,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(top = 8.dp)
-                    )
+                            Spacer(modifier = Modifier.height(16.dp))
+
+                            Text(
+                                text = "Current value: $${coinDetails!!.current_price}",
+                                color = Color.White,
+                                fontSize = 20.sp,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.padding(top = 8.dp)
+                            )
+                        }
+
+                        else -> {
+                            Text(
+                                text = "Loading...",
+                                color = Color.Gray,
+                                fontSize = 20.sp,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.padding(16.dp)
+                            )
+                        }
+                    }
 
                     Spacer(modifier = Modifier.height(16.dp))
 
                     InputField(
-                        labelText = "Enter amount",
+                        labelText = "Enter Amount",
                         value = coinAmount,
                         onValueChange = {
                             coinAmount = it
-                            isValidAmount = numberRegex.matches(it)
+                            validEntry = coinAmount.matches(entryReg)
+
+                            println("Current Input: $coinAmount")
+                            println("Valid Entry: $validEntry")
                         }
                     )
 
@@ -137,16 +137,20 @@ fun CoinDetailScreen(navController: NavController, coinId: String?, viewModel: C
 
                     BtnSecondary(
                         onClick = {
-                            if (isValidAmount) {
+                            println("Add Button Clicked")
+                            println("Valid Entry on Click: $validEntry")
+
+                            if (validEntry) {
+                                println("Navigating to assets")
                                 navController.navigate("assets")
                             } else {
+                                println("Navigating to home")
                                 navController.navigate("home")
                             }
                         },
                         text = "ADD",
-                        destination = "assets",
                         navController = navController
-                    ) {}
+                    )
                 }
             }
         }
