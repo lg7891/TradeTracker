@@ -16,6 +16,7 @@ import com.example.tradetracker.ui.screens.signin.LoginScreen
 import com.example.tradetracker.ui.screens.signin.SignupScreen
 import com.example.tradetracker.ui.screens.assets.AddScreen
 import com.example.tradetracker.ui.screens.assets.AssetsScreen
+import com.example.tradetracker.ui.screens.assets.CoinDetailScreen
 import com.example.tradetracker.models.AuthViewModel as AuthViewModel1
 
 @Composable
@@ -43,6 +44,9 @@ fun NavigationGraph(authViewModel: AuthViewModel1, coinViewModel: CoinViewModel)
         }
         composable("help") {
             HelpScreen(navController)
+        }
+        composable("coinDetail") {
+            CoinDetailScreen(navController)
         }
     })
 }
