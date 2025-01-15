@@ -80,11 +80,10 @@ fun AddScreen(navController: NavController, viewModel: CoinViewModel = viewModel
                             .fillMaxWidth()
                             .border(1.dp, Color.Gray)
                             .padding(8.dp)
-                            .clickable { navController.navigate("coinDetail") }
+                            .clickable { navController.navigate("coin_detail/${coin.id}") }
                     )
                 }
             }
-
             NavigationBar(navController)
         }
     }

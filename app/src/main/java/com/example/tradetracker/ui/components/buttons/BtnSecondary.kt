@@ -10,13 +10,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.tradetracker.ui.theme.bg
 import com.example.tradetracker.ui.theme.yc
 
 @Composable
 fun BtnSecondary(
     text: String,
-    onClick: () -> Unit
+    destination: String,
+    navController: NavController,
+    onClick: () -> Unit,
+    extraText: @Composable (() -> Unit)? = null
 ) {
     Button(
         onClick = onClick,

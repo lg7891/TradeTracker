@@ -5,10 +5,13 @@ package com.example.tradetracker.ui.navigation
 import CoinViewModel
 import HomeScreen
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.tradetracker.models.AuthViewModel
 import com.example.tradetracker.ui.screens.HelpScreen
 import com.example.tradetracker.ui.screens.SettingsScreen
@@ -45,8 +48,12 @@ fun NavigationGraph(authViewModel: AuthViewModel1, coinViewModel: CoinViewModel)
         composable("help") {
             HelpScreen(navController)
         }
-        composable("coinDetail") {
-            CoinDetailScreen(navController)
+        composable(
+            route = "coin_detail/{coinId}",
+            arguments = listOf(navArgument("coinId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val coinId = backStackEntry.arguments?.getString("coinId")
+            CoinDetailScreen(navController, coinId = coinId, coinViewModel)
         }
     })
 }
