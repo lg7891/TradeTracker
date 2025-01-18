@@ -1,7 +1,7 @@
 package com.example.tradetracker.ui.screens.assets
 
 import AlertDialog
-import CoinViewModel
+import com.example.tradetracker.viewmodel.CoinViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
@@ -20,7 +20,7 @@ import com.example.tradetracker.ui.theme.bg
 
 @Composable
 fun CoinDetailScreen(navController: NavController, coinId: String?, viewModel: CoinViewModel = viewModel()) {
-    val coinDetails by viewModel.coinDetails.collectAsState()
+    val coinDetails by viewModel.apiCoinDetails.collectAsState()
     val errorMessage by viewModel.errorMessage.collectAsState()
     var coinAmount by remember { mutableStateOf("") }
     var validEntry by remember { mutableStateOf(false) }

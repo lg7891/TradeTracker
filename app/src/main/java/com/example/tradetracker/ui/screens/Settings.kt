@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -17,8 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.tradetracker.models.AuthState
-import com.example.tradetracker.models.AuthViewModel
+import com.example.tradetracker.viewmodel.AuthState
+import com.example.tradetracker.viewmodel.AuthViewModel
 import com.example.tradetracker.ui.components.NavigationBar
 import com.example.tradetracker.ui.theme.bg
 import com.example.tradetracker.ui.theme.yc

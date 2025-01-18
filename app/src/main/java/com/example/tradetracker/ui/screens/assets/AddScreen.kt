@@ -1,14 +1,13 @@
 package com.example.tradetracker.ui.screens.assets
 
-import Coin
-import CoinViewModel
+import ApiCoin
+import com.example.tradetracker.viewmodel.CoinViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -90,7 +89,7 @@ fun AddScreen(navController: NavController, viewModel: CoinViewModel = viewModel
 }
 
 @Composable
-fun CoinItem(coin: Coin, modifier: Modifier) {
+fun CoinItem(apiCoin: ApiCoin, modifier: Modifier) {
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -106,7 +105,7 @@ fun CoinItem(coin: Coin, modifier: Modifier) {
         Spacer(modifier = Modifier.width(16.dp))
 
         Text(
-            text = coin.name,
+            text = apiCoin.name,
             fontWeight = FontWeight.Bold,
             color = Color.White,
             fontSize = 25.sp,
@@ -114,7 +113,7 @@ fun CoinItem(coin: Coin, modifier: Modifier) {
         )
 
         Text(
-            text = "Price: $${coin.current_price}",
+            text = "Price: $${apiCoin.current_price}",
             fontSize = 25.sp,
             color = Color.White
         )

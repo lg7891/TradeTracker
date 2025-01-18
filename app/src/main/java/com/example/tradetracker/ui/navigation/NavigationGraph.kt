@@ -2,17 +2,14 @@
 
 package com.example.tradetracker.ui.navigation
 
-import CoinViewModel
+import com.example.tradetracker.viewmodel.CoinViewModel
 import HomeScreen
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.tradetracker.models.AuthViewModel
 import com.example.tradetracker.ui.screens.HelpScreen
 import com.example.tradetracker.ui.screens.SettingsScreen
 import com.example.tradetracker.ui.screens.signin.LoginScreen
@@ -20,7 +17,7 @@ import com.example.tradetracker.ui.screens.signin.SignupScreen
 import com.example.tradetracker.ui.screens.assets.AddScreen
 import com.example.tradetracker.ui.screens.assets.AssetsScreen
 import com.example.tradetracker.ui.screens.assets.CoinDetailScreen
-import com.example.tradetracker.models.AuthViewModel as AuthViewModel1
+import com.example.tradetracker.viewmodel.AuthViewModel as AuthViewModel1
 
 @Composable
 fun NavigationGraph(authViewModel: AuthViewModel1, coinViewModel: CoinViewModel) {
