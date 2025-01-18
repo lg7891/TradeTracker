@@ -1,6 +1,6 @@
 package com.example.tradetracker.viewmodel
 
-import com.example.tradetracker.repository.CoinRepository
+import com.example.tradetracker.api.CoinRepository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 

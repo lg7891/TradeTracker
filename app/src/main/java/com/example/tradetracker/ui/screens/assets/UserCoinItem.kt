@@ -1,13 +1,10 @@
 package com.example.tradetracker.ui.screens.assets
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.text.BasicText
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -21,14 +18,6 @@ import com.example.tradetracker.ui.theme.bg
 
 @Composable
 fun UserCoinItem(userCoin: UserCoin, modifier: Modifier) {
-//    Column(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(8.dp)
-//    ) {
-//        BasicText(text = "Name: ${userCoin.name}")
-//        BasicText(text = "Amount: ${userCoin.amount}")
-//    }
     Row(
         modifier = modifier
             .fillMaxWidth()
@@ -46,7 +35,7 @@ fun UserCoinItem(userCoin: UserCoin, modifier: Modifier) {
         )
 
         Text(
-            text = "Price: $${userCoin.amount}",
+            text = "Amount: ${userCoin.amount}",
             fontSize = 25.sp,
             color = Color.White
         )

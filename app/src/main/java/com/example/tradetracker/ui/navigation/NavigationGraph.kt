@@ -10,7 +10,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.tradetracker.ui.screens.HelpScreen
 import com.example.tradetracker.ui.screens.SettingsScreen
 import com.example.tradetracker.ui.screens.signin.LoginScreen
 import com.example.tradetracker.ui.screens.signin.SignupScreen
@@ -41,9 +40,6 @@ fun NavigationGraph(authViewModel: AuthViewModel1, coinViewModel: CoinViewModel)
         }
         composable("settings") {
             SettingsScreen(navController, authViewModel)
-        }
-        composable("help") {
-            HelpScreen(navController)
         }
         composable(
             route = "coin_detail/{coinId}",

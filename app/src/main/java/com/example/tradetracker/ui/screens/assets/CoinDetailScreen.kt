@@ -142,9 +142,6 @@ fun CoinDetailScreen(navController: NavController, coinId: String?, viewModel: C
 
                     BtnSecondary(
                         onClick = {
-                            println("Add Button Clicked")
-                            println("Valid Entry on Click: $validEntry")
-
                             if (validEntry) {
                                 val userCoin = coinDetails?.let {
                                     UserCoin(

@@ -1,7 +1,7 @@
 package com.example.tradetracker.viewmodel
 
 import com.example.tradetracker.models.ApiCoin
-import com.example.tradetracker.repository.CoinRepository
+import com.example.tradetracker.api.CoinRepository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow

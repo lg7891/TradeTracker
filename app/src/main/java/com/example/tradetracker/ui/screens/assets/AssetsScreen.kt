@@ -54,7 +54,7 @@ fun AssetsScreen(navController: NavController) {
                     .height(70.dp)
             ) {
                 Text(
-                    text = "Add a coin",
+                    text = "Your Assets",
                     textAlign = TextAlign.Center,
                     color = Color.White,
                     fontSize = 50.sp,

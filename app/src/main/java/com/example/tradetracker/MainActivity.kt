@@ -1,6 +1,6 @@
 package com.example.tradetracker
 
-import com.example.tradetracker.repository.CoinRepository
+import com.example.tradetracker.api.CoinRepository
 import com.example.tradetracker.viewmodel.CoinViewModel
 import android.os.Bundle
 import androidx.activity.ComponentActivity

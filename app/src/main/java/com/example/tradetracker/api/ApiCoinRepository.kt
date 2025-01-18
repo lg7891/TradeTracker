@@ -1,4 +1,4 @@
-package com.example.tradetracker.repository
+package com.example.tradetracker.api
 
 import CoinGeckoApi
 import com.example.tradetracker.models.ApiCoin
