@@ -19,8 +19,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.tradetracker.models.AuthState
-import com.example.tradetracker.models.AuthViewModel
+import com.example.tradetracker.viewmodel.AuthState
+import com.example.tradetracker.viewmodel.AuthViewModel
 import com.example.tradetracker.ui.components.buttons.BtnPrimary
 import com.example.tradetracker.ui.components.InputField
 import com.example.tradetracker.ui.theme.bg

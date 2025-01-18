@@ -1,5 +1,6 @@
 package com.example.tradetracker.ui.screens.signin
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.HorizontalDivider
@@ -14,24 +15,22 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.tradetracker.models.AuthState
-import com.example.tradetracker.models.AuthViewModel
+import com.example.tradetracker.viewmodel.AuthState
+import com.example.tradetracker.viewmodel.AuthViewModel
 import com.example.tradetracker.ui.components.buttons.BtnPrimary
 import com.example.tradetracker.ui.components.InputField
-import com.example.tradetracker.ui.screens.LoadingScreen
 import com.example.tradetracker.ui.theme.bg
 import com.example.tradetracker.ui.theme.yc
-import kotlinx.coroutines.delay
 
 @Composable
 fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
 
-//    var isLoading by remember { mutableStateOf(true) }
     val authState = authViewModel.authState.observeAsState()
     val context = LocalContext.current
 
@@ -43,16 +42,14 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
         mutableStateOf("")
     }
 
-//    LaunchedEffect(Unit) {
-//        delay(2000)
-//        isLoading = false
-//    }
-//
-//    if (isLoading) {
-//        LoadingScreen()
-//    } else {
-//        LoginScreen(navController, authViewModel)
-//    }
+    LaunchedEffect(authState.value) {
+        when(authState.value){
+            is AuthState.Authenticated -> navController.navigate("home")
+            is AuthState.Error -> Toast.makeText(context,
+                (authState.value as AuthState.Error).message, Toast.LENGTH_SHORT).show()
+            else -> Unit
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -94,14 +91,13 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
             Spacer(modifier = Modifier.height(16.dp))
 
             BtnPrimary(
+                onClick = {
+                    authViewModel.login(email, password)
+                },
                 text = "LOGIN",
                 destination = "home",
                 navController = navController,
-                onClick = {
-                    authViewModel.login(email, password)
-                }) {
-                Text(text = "No account is linked to entered DAta, SingUp!")
-            }
+                ) {}
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -114,7 +110,7 @@ fun LoginScreen(navController: NavController, authViewModel: AuthViewModel) {
             TextButton(onClick = {
                 navController.navigate("signup")
             }) {
-                Text(text = "Don't have an account, Signup")
+                Text(text = "Don't have an account, Signup", color = Color.White)
             }
         }
     }

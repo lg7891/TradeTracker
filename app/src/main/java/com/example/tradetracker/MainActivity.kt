@@ -1,15 +1,15 @@
 package com.example.tradetracker
 
-import CoinRepository
-import CoinViewModel
+import com.example.tradetracker.repository.CoinRepository
+import com.example.tradetracker.viewmodel.CoinViewModel
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModelProvider
-import com.example.tradetracker.models.AuthViewModel
-import com.example.tradetracker.models.CoinViewModelFactory
+import com.example.tradetracker.viewmodel.AuthViewModel
+import com.example.tradetracker.viewmodel.CoinViewModelFactory
 import com.example.tradetracker.ui.navigation.NavigationGraph
 
 class MainActivity : ComponentActivity() {

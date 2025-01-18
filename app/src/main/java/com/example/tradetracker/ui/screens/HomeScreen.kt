@@ -8,8 +8,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.tradetracker.R
-import com.example.tradetracker.models.AuthState
-import com.example.tradetracker.models.AuthViewModel
+import com.example.tradetracker.viewmodel.AuthState
+import com.example.tradetracker.viewmodel.AuthViewModel
 import com.example.tradetracker.ui.theme.bg
 import com.example.tradetracker.ui.components.NavigationBar
 import com.example.tradetracker.ui.components.buttons.HomeScreenBtn
