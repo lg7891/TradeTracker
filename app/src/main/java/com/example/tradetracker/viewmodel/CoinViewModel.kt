@@ -1,6 +1,6 @@
 package com.example.tradetracker.viewmodel
 
-import ApiCoin
+import com.example.tradetracker.models.ApiCoin
 import com.example.tradetracker.repository.CoinRepository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -9,14 +9,20 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import com.example.tradetracker.data.PortfolioDatabase
+import com.example.tradetracker.models.UserCoin
 import com.example.tradetracker.ui.components.InputField
 import com.example.tradetracker.ui.components.buttons.BtnSecondary
 import com.example.tradetracker.ui.theme.bg
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @Composable
 fun CoinDetailScreen(navController: NavController, coinId: String?, viewModel: CoinViewModel = viewModel()) {
@@ -26,6 +32,7 @@ fun CoinDetailScreen(navController: NavController, coinId: String?, viewModel: C
     var validEntry by remember { mutableStateOf(false) }
     val entryReg = Regex("^[0-9]+\\.?[0-9]*\$")
     var showDialog by remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     if (showDialog) {
         AlertDialog(
@@ -139,6 +146,20 @@ fun CoinDetailScreen(navController: NavController, coinId: String?, viewModel: C
                             println("Valid Entry on Click: $validEntry")
 
                             if (validEntry) {
+                                val userCoin = coinDetails?.let {
+                                    UserCoin(
+                                        id = System.currentTimeMillis().toString(),
+                                        name = it.name,
+                                        amount = coinAmount.toDoubleOrNull() ?: 0.0
+                                    )
+                                }
+
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    val dao = PortfolioDatabase.getDatabase(context).userCoinDao()
+                                    if (userCoin != null) {
+                                        dao.insertUserCoin(userCoin)
+                                    }
+                                }
                                 navController.navigate("assets")
                             } else {
                                 showDialog = true
