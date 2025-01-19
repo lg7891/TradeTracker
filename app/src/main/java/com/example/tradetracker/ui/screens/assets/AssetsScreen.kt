@@ -32,9 +32,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.example.tradetracker.ui.components.NavigationBar
 import com.example.tradetracker.ui.theme.bg
+import com.example.tradetracker.viewmodel.CoinViewModel
 
 @Composable
-fun AssetsScreen(navController: NavController) {
+fun AssetsScreen(navController: NavController, coinViewModel: CoinViewModel) {
     val context = LocalContext.current
     var userCoins by remember { mutableStateOf(emptyList<UserCoin>()) }
 
@@ -77,14 +78,15 @@ fun AssetsScreen(navController: NavController) {
                     .background(bg),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                items(userCoins) { coin ->
+                items(userCoins) { userCoin ->
                     UserCoinItem(
-                        userCoin = coin,
+                        userCoin = userCoin,
+                        coinViewModel = coinViewModel,
                         modifier = Modifier
                             .fillMaxWidth()
                             .border(1.dp, Color.Gray)
                             .padding(8.dp)
-                            .clickable { navController.navigate("coin_detail/${coin.id}") }
+                            .clickable { navController.navigate("coin_detail/${userCoin.id}") }
                         )
                     Spacer(modifier = Modifier.height(8.dp))
                 }

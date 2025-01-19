@@ -34,14 +34,9 @@ class CoinViewModel(private val repository: CoinRepository) : ViewModel() {
     fun fetchCoinDetails(coinId: String) {
         viewModelScope.launch {
             try {
-                val coin = _coins.value.find { it.id == coinId }
-                if (coin != null) {
-                    _Api_coinDetails.value = coin
-                    _errorMessage.value = null
-                } else {
-                    _errorMessage.value = "Coin not found"
-                    _Api_coinDetails.value = null
-                }
+                val fetchedCoin = repository.getCoinDetails(coinId)
+                _Api_coinDetails.value = fetchedCoin
+                _errorMessage.value = null
             } catch (e: Exception) {
                 e.printStackTrace()
                 _errorMessage.value = "Error fetching coin details"

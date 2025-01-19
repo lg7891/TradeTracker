@@ -36,7 +36,7 @@ fun ApiCoinItem(apiCoin: ApiCoin, modifier: Modifier) {
         )
 
         Text(
-            text = "Amount: ${apiCoin.current_price}",
+            text = "Current price: $${apiCoin.current_price}",
             fontSize = 25.sp,
             color = Color.White
         )

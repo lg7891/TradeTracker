@@ -33,7 +33,7 @@ fun NavigationGraph(authViewModel: AuthViewModel1, coinViewModel: CoinViewModel)
             HomeScreen(navController, authViewModel)
         }
         composable("assets") {
-            AssetsScreen(navController)
+            AssetsScreen(navController, coinViewModel)
         }
         composable("add") {
             AddScreen(navController = navController, coinViewModel)
