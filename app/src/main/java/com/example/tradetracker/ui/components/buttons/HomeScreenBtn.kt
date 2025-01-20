@@ -27,6 +27,7 @@ fun HomeScreenBtn(
     text: String,
     destination: String,
     navController: NavController,
+//    onClick: () -> Unit,
     @DrawableRes iconResId: Int
 ) {
     OutlinedButton(

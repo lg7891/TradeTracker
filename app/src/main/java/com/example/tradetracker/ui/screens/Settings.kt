@@ -39,6 +39,7 @@ fun SettingsScreen(navController: NavController, authViewModel: AuthViewModel) {
             .fillMaxSize()
             .background(bg)
     ) {
+        // Centering the content in the middle of the screen
         Column(
             modifier = Modifier
                 .fillMaxSize()

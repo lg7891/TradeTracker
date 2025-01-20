@@ -31,7 +31,7 @@ import com.example.tradetracker.ui.theme.bg
 @Composable
 fun AddScreen(navController: NavController, viewModel: CoinViewModel = viewModel()) {
     val coins = viewModel.coins.collectAsState()
-    val displayedCoins = coins.value.take(30)
+    val displayedCoins = coins.value.take(20)
 
     Box(
         modifier = Modifier
